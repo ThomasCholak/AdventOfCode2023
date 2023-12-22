@@ -44,7 +44,6 @@ if __name__ == "__main__":
                 if test_res:
                     final_sum.append(matches[i][1])
             else:
-
                 test_res1 = range_checker(op_list[(match_num - 2)][1], start_range, end_range)
                 test_res2 = range_checker(op_list[(match_num - 1)][1], start_range, end_range)
                 test_res3 = range_checker(op_list[match_num][1], start_range, end_range)
@@ -54,4 +53,4 @@ if __name__ == "__main__":
                 if test_res4:
                     final_sum.append(matches[i][1])
 
-        print(sum(final_sum))
+        print(sum(final_sum))  # prints sum of 525119 (correct answer)
