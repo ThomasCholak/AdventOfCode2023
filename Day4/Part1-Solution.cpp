@@ -22,9 +22,9 @@ int main() {
 
     for (std::string line; getline(infile, line);)  //reads 'input' file line by line
     {
-        colon_pos = line.find(':');            // finds position of "colon" in "line" string
-        line.erase(0, colon_pos + 1);          // erases "Game", subsequent game number, and ":"
-        bar_pos = line.find('|');              // finds position of "|" character
+        colon_pos = line.find(':');           // finds position of "colon" in "line" string
+        line.erase(0, colon_pos + 1);    // erases "Game", subsequent game number, and ":"
+        bar_pos = line.find('|');            // finds position of "|" character
 
         // DIVIDES string into two parts using the '|' character
         part1 = line.substr(0, bar_pos);
@@ -74,17 +74,15 @@ int main() {
                               v.begin());
 
         for (st = v.begin(); st != it; ++st)
-            winning_nums.push_back(*st);     // appends winning numbers to 'winning_nums' integer vector
+            winning_nums.push_back(*st);  // appends winning numbers to 'winning_nums' integer vector
 
-        std::cout << "vector size = " << winning_nums.size() << std::endl;
-        
         // y = (1/2) * (2^(winning_nums.size())) or y=(1/2)*2^x
         total_nums.push_back((0.5) * pow(2,(winning_nums.size())));
     }
-    
+
     auto result = std::reduce(total_nums.begin(), total_nums.end());  // finds sum of 'total_nums' vector
 
-    std::cout << result << std::endl; // prints '27059' which is the correct answer for my data set
+    std::cout << "Sum -> " << result << std::endl; // prints '27059' which is the correct answer for my data set
 
     return 0;
 }
