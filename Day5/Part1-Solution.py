@@ -84,7 +84,7 @@ if __name__ == "__main__":
     ]
 
     for val in table_values:
-        x_values, y_values = create_Key(table_values)
+        x_values, y_values = create_Key(val)
         seed_List = new_Seeds(seed_List, x_values, y_values)
 
     print(seed_List)
