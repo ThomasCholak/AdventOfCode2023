@@ -4,6 +4,17 @@
 #include <sstream>
 #include <list>
 
+bool findNumberInRanges(int number, const std::vector<std::pair<int, int>>& ranges_vector, size_t& index) {
+    for (size_t i = 0; i < ranges_vector.size(); ++i)
+    {
+        if (number >= ranges_vector[i].first && number <= ranges_vector[i].second)
+        {
+            index = i; // index num
+            return true;
+        }
+    }
+    return false;
+}
 
 std::list<long long int> parse_int(const std::string& line)
 {
@@ -12,32 +23,38 @@ std::list<long long int> parse_int(const std::string& line)
 
     long long int number;
     while (iss >> number)
-    {
         integers.push_back(number);  // pushes current number to 'integers' vector
-    }
 
     return integers;                    // returns list of three integers
 }
-void find_Map(const std::list<long long int>& row, long long int seed_List[20])
+
+void find_Map(const std::vector<std::list<long long int>>& matrix, long long int seed_List[20])
 {
-    auto it = row.begin();
+    std::vector<std::pair<long long int, long long int>> x_ranges;
+    std::vector<long long int> y_values;
 
-    long long y  = *it;  // left-most number (destination start)
-
-    std::advance(it, + 1);
-    long long x = *it;  // middle number  (range start)
-
-    std::advance(it, + 1);
-    long long max = x + (*it - 1);  // right-most number  (used to calculate the max)
-
-    long long diff = y - x;  // calculates the difference
-
-    for (int i = 0; i < 20; ++i) {
-        if (seed_List[i] >= x && seed_List[i] <= max)
+    for (const auto& row : matrix)
+    {
+        long long y; long long x; long long repeat_num;
+        for (long long int value: row)
         {
-            seed_List[i] = seed_List[i] + diff;  // if element is found to be in range, apply the difference
+            auto it = row.begin(); // initializes 'it' as an iterator
+            y  = *it;                          // left-most number (destination start)
+
+            std::advance(it, + 1);
+            x = *it;                          // middle number  (range start)
+
+            std::advance(it, + 1);
+            repeat_num = *it;                 // right-most number  (used to calculate the repeat_num)
         }
+        // std::cout << y << " " << x << " " << repeat_num << " " << std::endl;
+        x_ranges.emplace_back(x, x + (repeat_num - 1));
+        y_values.push_back(y);
     }
+    for (const auto& range : x_ranges)
+        std::cout << "Start: " << range.first << ", End: " << range.second << std::endl;
+    for (long long int value : y_values)
+        std::cout << value << " ";
 }
 
 int main()
@@ -110,15 +127,21 @@ int main()
         i++;
     }
 
-    for (const auto& row : seed_to_soil)
-    {
-        find_Map(row, seed_List);
-    }
+    find_Map(seed_to_soil, seed_List);
 
+    int size = sizeof(seed_List) / sizeof(seed_List[0]);
+    long long min = seed_List[0];
+
+    /*
     std::cout << "Final Seed List: " << std::endl;
     for (long long m : seed_List)
         std::cout << m << " ";
-    
+    */
+
+    for (int k = 1; k < size; ++k)  // function to find the minimum
+        if (seed_List[k] < min)
+            min = seed_List[k];
+
+    //std::cout << "\nMin: " << min << std::endl;
     return 0;
 }
-
