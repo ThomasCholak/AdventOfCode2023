@@ -4,7 +4,7 @@
 #include <sstream>
 #include <list>
 
-bool findNumberInRanges(int number, const std::vector<std::pair<int, int>>& ranges_vector, size_t& index) {
+bool findNumberInRanges(long long int number, const std::vector<std::pair<long long int, long long int>>& ranges_vector, size_t& index) {
     for (size_t i = 0; i < ranges_vector.size(); ++i)
     {
         if (number >= ranges_vector[i].first && number <= ranges_vector[i].second)
@@ -145,3 +145,4 @@ int main()
     //std::cout << "\nMin: " << min << std::endl;
     return 0;
 }
+
