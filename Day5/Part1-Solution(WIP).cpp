@@ -4,6 +4,7 @@
 #include <sstream>
 #include <list>
 
+
 std::list<long long int> parse_int(const std::string& line)
 {
     std::istringstream iss(line);    // parses line 'i'
@@ -16,6 +17,27 @@ std::list<long long int> parse_int(const std::string& line)
     }
 
     return integers;                    // returns list of three integers
+}
+void find_Map(const std::list<long long int>& row, long long int seed_List[20])
+{
+    auto it = row.begin();
+
+    long long y  = *it;  // left-most number (destination start)
+
+    std::advance(it, + 1);
+    long long x = *it;  // middle number  (range start)
+
+    std::advance(it, + 1);
+    long long max = x + (*it - 1);  // right-most number  (used to calculate the max)
+
+    long long diff = y - x;  // calculates the difference
+
+    for (int i = 0; i < 20; ++i) {
+        if (seed_List[i] >= x && seed_List[i] <= max)
+        {
+            seed_List[i] = seed_List[i] + diff;  // if element is found to be in range, apply the difference
+        }
+    }
 }
 
 int main()
@@ -88,67 +110,15 @@ int main()
         i++;
     }
 
-    /*
-    std::cout << "Seed-to-Soil: " << std::endl;
-    for (const auto& integerList : seed_to_soil) {
-        for (long long value : integerList) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
+    for (const auto& row : seed_to_soil)
+    {
+        find_Map(row, seed_List);
     }
-     */
-    /*
-    std::cout << "\nSoil-to-Fertilize: " << std::endl;
-    for (const auto& integerList : soil_to_fert) {
-        for (long long value : integerList) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
-    }
-     */
-    /*
-    std::cout << "\nFertilizer-to-Water: " << std::endl;
-    for (const auto& integerList : fert_to_water) {
-        for (long long value : integerList) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
-    }
-     */
-    /*
-    std::cout << "\nWater-to-Light: " << std::endl;
-    for (const auto& integerList : water_to_light) {
-        for (long long value : integerList) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
-    }
-     */
-    /*
-    std::cout << "\nLight-to-Temp: " << std::endl;
-    for (const auto& integerList : light_to_temp) {
-        for (long long value : integerList) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
-    }
-     */
-    /*
-    std::cout << "\nTemp-to-Humidity: " << std::endl;
-    for (const auto& integerList : temp_to_humid) {
-        for (long long value : integerList) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
-    }
-     */
-    std::cout << "\nHumidity-to-Location: " << std::endl;
-    for (const auto& integerList : humid_to_loc) {
-        for (long long value : integerList) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
-    }
+
+    std::cout << "Final Seed List: " << std::endl;
+    for (long long m : seed_List)
+        std::cout << m << " ";
+    
     return 0;
 }
 
